@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Supplementary" id="U6b-Vx-4bR" customClass="DecorationCollectionReusableView" customModule="JNews" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="108" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已阅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAs-9s-wKb">
+                    <rect key="frame" x="0.0" y="8" width="108" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0v-zj-mtF">
+                    <rect key="frame" x="0.0" y="37" width="108" height="33"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <constraints>
+                <constraint firstItem="U0v-zj-mtF" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="RPZ-N4-Pyq"/>
+                <constraint firstAttribute="trailing" secondItem="LAs-9s-wKb" secondAttribute="trailing" id="TAo-Qd-UkP"/>
+                <constraint firstItem="LAs-9s-wKb" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="Twt-xf-0rw"/>
+                <constraint firstAttribute="trailing" secondItem="U0v-zj-mtF" secondAttribute="trailing" id="Wxr-ql-gRr"/>
+                <constraint firstItem="U0v-zj-mtF" firstAttribute="top" secondItem="LAs-9s-wKb" secondAttribute="bottom" constant="8" id="k0J-wz-QYw"/>
+                <constraint firstItem="LAs-9s-wKb" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="8" id="zhA-uh-gof"/>
+            </constraints>
+            <connections>
+                <outlet property="readLabel" destination="U0v-zj-mtF" id="HcU-uS-iiY"/>
+            </connections>
+            <point key="canvasLocation" x="325" y="322"/>
+        </collectionReusableView>
+    </objects>
+</document>

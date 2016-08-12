@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="NightCollectionViewCell" customModule="JNews" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkZ-wq-4DY">
+                        <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Night_Unselected" translatesAutoresizingMaskIntoConstraints="NO" id="v1w-Ob-AqU">
+                                <rect key="frame" x="6" y="52" width="55" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="V50-qG-DbR"/>
+                                    <constraint firstAttribute="height" constant="55" id="zsZ-3A-TGe"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="v1w-Ob-AqU" secondAttribute="trailing" constant="6" id="Aub-2F-Ipj"/>
+                            <constraint firstAttribute="trailing" secondItem="v1w-Ob-AqU" secondAttribute="trailing" constant="12" id="ECf-YM-VIv"/>
+                            <constraint firstItem="v1w-Ob-AqU" firstAttribute="leading" secondItem="tkZ-wq-4DY" secondAttribute="leading" constant="6" id="bO2-ja-OZb"/>
+                            <constraint firstAttribute="bottom" secondItem="v1w-Ob-AqU" secondAttribute="bottom" constant="8" id="eV9-oT-yzQ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Aub-2F-Ipj"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="tkZ-wq-4DY" secondAttribute="bottom" id="0bb-2z-iFd"/>
+                <constraint firstItem="tkZ-wq-4DY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="KmM-1X-PYC"/>
+                <constraint firstAttribute="trailing" secondItem="tkZ-wq-4DY" secondAttribute="trailing" id="R5h-Nf-y43"/>
+                <constraint firstItem="tkZ-wq-4DY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ZD8-Qj-9Hw"/>
+            </constraints>
+            <connections>
+                <outlet property="nightImageView" destination="v1w-Ob-AqU" id="seW-Ty-Wcl"/>
+            </connections>
+            <point key="canvasLocation" x="248.5" y="356.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Night_Unselected" width="45" height="45"/>
+    </resources>
+</document>

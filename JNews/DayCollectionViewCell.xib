@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="tJN-Af-X5O" customClass="DayCollectionViewCell" customModule="JNews" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w85-cR-a7f">
+                        <rect key="frame" x="0.0" y="0.0" width="73" height="115"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7IX-pH-AZ4">
+                                <rect key="frame" x="0.0" y="42" width="1" height="65"/>
+                                <color key="backgroundColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="IPV-dj-hn3"/>
+                                    <constraint firstAttribute="height" constant="65" id="RKZ-TN-FGj"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Day_Unselected" translatesAutoresizingMaskIntoConstraints="NO" id="TRN-PR-p4k">
+                                <rect key="frame" x="12" y="52" width="55" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="J7i-jh-hFz"/>
+                                    <constraint firstAttribute="height" constant="55" id="Srv-qx-tdo"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07/24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adi-i9-4v7">
+                                <rect key="frame" x="0.0" y="6" width="33" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="周一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHV-gL-b34">
+                                <rect key="frame" x="0.0" y="23" width="24" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TRN-PR-p4k" firstAttribute="leading" secondItem="7IX-pH-AZ4" secondAttribute="trailing" constant="11" id="2f7-7T-sjC"/>
+                            <constraint firstAttribute="trailing" secondItem="TRN-PR-p4k" secondAttribute="trailing" constant="6" id="4m4-be-OQC"/>
+                            <constraint firstItem="adi-i9-4v7" firstAttribute="leading" secondItem="w85-cR-a7f" secondAttribute="leading" id="8Eg-03-YrI"/>
+                            <constraint firstItem="yHV-gL-b34" firstAttribute="top" secondItem="adi-i9-4v7" secondAttribute="bottom" constant="2" id="FlS-cl-ZbJ"/>
+                            <constraint firstAttribute="trailing" secondItem="TRN-PR-p4k" secondAttribute="trailing" constant="6" id="bV6-er-iKP"/>
+                            <constraint firstAttribute="bottom" secondItem="7IX-pH-AZ4" secondAttribute="bottom" constant="8" id="eSC-lZ-9d5"/>
+                            <constraint firstItem="yHV-gL-b34" firstAttribute="leading" secondItem="w85-cR-a7f" secondAttribute="leading" id="g0C-xz-jcA"/>
+                            <constraint firstItem="adi-i9-4v7" firstAttribute="top" secondItem="w85-cR-a7f" secondAttribute="top" constant="6" id="mJx-77-gsx"/>
+                            <constraint firstAttribute="bottom" secondItem="TRN-PR-p4k" secondAttribute="bottom" constant="8" id="nor-d6-she"/>
+                            <constraint firstItem="7IX-pH-AZ4" firstAttribute="leading" secondItem="w85-cR-a7f" secondAttribute="leading" id="qHa-52-J2j"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bV6-er-iKP"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="w85-cR-a7f" secondAttribute="trailing" id="EfQ-x8-ZKk"/>
+                <constraint firstItem="w85-cR-a7f" firstAttribute="leading" secondItem="tJN-Af-X5O" secondAttribute="leading" id="NNs-cB-cXq"/>
+                <constraint firstItem="w85-cR-a7f" firstAttribute="top" secondItem="tJN-Af-X5O" secondAttribute="top" id="XhW-KM-mpr"/>
+                <constraint firstAttribute="bottom" secondItem="w85-cR-a7f" secondAttribute="bottom" id="hEd-h4-A3y"/>
+            </constraints>
+            <connections>
+                <outlet property="dateLabel" destination="adi-i9-4v7" id="GbD-hK-jib"/>
+                <outlet property="dayImageView" destination="TRN-PR-p4k" id="6lh-M7-t4K"/>
+                <outlet property="weekLabel" destination="yHV-gL-b34" id="Ncv-dB-EEp"/>
+            </connections>
+            <point key="canvasLocation" x="248.5" y="356.5"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Day_Unselected" width="45" height="45"/>
+    </resources>
+</document>
