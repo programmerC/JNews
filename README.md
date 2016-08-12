@@ -5,10 +5,10 @@
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/1.gif)
 
 #####浏览新闻效果
-![image](https://github.com/programmerC/JNews/raw/master/Gif/2.gif)
+![image](https://github.com/programmerC/JNews/raw/master/Gif/3.gif)
 
 #####具体新闻左右滑效果
-![image](https://github.com/programmerC/JNews/raw/master/Gif/3.gif)
+![image](https://github.com/programmerC/JNews/raw/master/Gif/2.gif)
 
 #####菜单栏按钮效果
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/4.gif)
