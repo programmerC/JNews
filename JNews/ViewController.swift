@@ -91,7 +91,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.newsArray = newsManager.findLastestNews()
                         if self.newsArray.count == 0 {
                             // 本地也没有数据，取一定有新闻的一天
-                            Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":"2016.08.05", "dayOrNight":"0"], encoding: .JSON, headers: ["Content-Type":"application/json"])
+                            Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":"2016.08.02", "dayOrNight":"0"], encoding: .JSON, headers: ["Content-Type":"application/json"])
                                 .responseJSON { (response) in
                                     guard response.result.error == nil else {
                                         print("Error: ", response.result.error!)
@@ -132,7 +132,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // 后台开启任务，从数据库清除6天前的新闻
-        self.performSelectorInBackground(#selector(ViewController.deleteNewsData), withObject: nil)
+//        self.performSelectorInBackground(#selector(ViewController.deleteNewsData), withObject: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -507,7 +507,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func deleteNewsData() {
-        // 获取六天前的日期
+        // 获取六天前的日期 Delete News Six Days Ago 
         let deleteTimeString = String.getXDaysAgoTimeString(6)
         let newsManager = NewsHelpers.shareManager
         newsManager.deleteNews(deleteTimeString)
