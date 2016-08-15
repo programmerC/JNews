@@ -13,7 +13,7 @@ let WIDTH = UIScreen.mainScreen().bounds.size.width
 let HEIGHT = UIScreen.mainScreen().bounds.size.height
 let Base_URL = "http://139.129.133.227:8080/"
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuViewDelegate, MainBottomTableViewCellDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuViewDelegate, MainBottomTableViewCellDelegate, ViewModelDelegate {
     @IBOutlet weak var mainTV: UITableView!
     @IBOutlet weak var menuButton: UIButton!
     let bottomCellHeight: CGFloat = 280
@@ -22,17 +22,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var lastOffset: CGFloat = 0
     var type: TimeType = TimeType.Day
     var newsArray = Array<NewsModel>()
+    let viewModel = ViewModel()
+    
     
     //MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
         
         // Register Nib
-        self.mainTV.registerNib(UINib.init(nibName: "MainTopTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Top")
-        self.mainTV.registerNib(UINib.init(nibName: "MainTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Another")
-        self.mainTV.registerNib(UINib.init(nibName: "MainBottomTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Bottom")
+        mainTV.registerNib(UINib.init(nibName: "MainTopTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Top")
+        mainTV.registerNib(UINib.init(nibName: "MainTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Another")
+        mainTV.registerNib(UINib.init(nibName: "MainBottomTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Bottom")
         // Cell Height
-        self.topCellHeight = HEIGHT - 10
+        topCellHeight = HEIGHT - 10
         
         // 默认是true，UIScrollView及其子类，会在顶部和底部预留空白
         self.automaticallyAdjustsScrollViewInsets = false
@@ -43,7 +46,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let submitString = String.getSubmitTimeString()
         var dayOrNight: NSInteger = 0
         
-        if self.validateTimeIsDay() {
+        if validateTimeIsDay() {
             dayOrNight = 0
             newsArray = newsManager.findNews(submitString, dayOrNight: dayOrNight)
         }
@@ -53,96 +56,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         if newsArray.count == 0 {
-            let loadingView = LoadingView()
             loadingView.show()
-            // 今天的新闻本地没有数据，从网上取
-            Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":submitString, "dayOrNight":"\(dayOrNight)"], encoding: .JSON, headers: ["Content-Type":"application/json"])
-                .responseJSON { (response) in
-                    guard response.result.error == nil else {
-                        print("Error: ", response.result.error!)
-                        return
-                    }
-                    let dataArray = response.result.value as! NSArray
-                    if dataArray.count != 0 {
-                        for dataDic in dataArray {
-                            let dictionary = dataDic as! NSDictionary
-                            
-                            let model = NewsModel()
-                            model.newsType = dictionary.objectForKey("newsType") as? NSNumber
-                            model.newsTitle = dictionary.objectForKey("newsTitle") as? String
-                            model.commNum = dictionary.objectForKey("commNum") as? NSNumber
-                            model.newsContent = dictionary.objectForKey("newsContent") as? String
-                            model.isRead = dictionary.objectForKey("isRead") as? NSNumber
-                            model.newsDate = dictionary.objectForKey("newsDate") as? String
-                            model.dayOrNight = dictionary.objectForKey("dayOrNight") as? NSNumber
-                            model.newsID = dictionary.objectForKey("_id") as? String
-                            model.newsPicture = dictionary.objectForKey("newsPicture") as? String
-                            
-                            // 存储到数据库
-                            newsManager.addNews(model)
-                            // 添加到 newsArray
-                            self.newsArray.append(model)
-                        }
-                        loadingView.dismiss()
-                        self.mainTV.reloadData()
-                    }
-                    else {
-                        // 服务器今天也没有新闻，从本地数据库取最新的新闻
-                        self.newsArray = newsManager.findLastestNews()
-                        if self.newsArray.count == 0 {
-                            // 本地也没有数据，取一定有新闻的一天
-                            Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":"2016.08.02", "dayOrNight":"0"], encoding: .JSON, headers: ["Content-Type":"application/json"])
-                                .responseJSON { (response) in
-                                    guard response.result.error == nil else {
-                                        print("Error: ", response.result.error!)
-                                        return
-                                    }
-                                    let dataArray = response.result.value as! NSArray
-                                    if dataArray.count != 0 {
-                                        for dataDic in dataArray {
-                                            let dictionary = dataDic as! NSDictionary
-                                            
-                                            let model = NewsModel()
-                                            model.newsType = dictionary.objectForKey("newsType") as? NSNumber
-                                            model.newsTitle = dictionary.objectForKey("newsTitle") as? String
-                                            model.commNum = dictionary.objectForKey("commNum") as? NSNumber
-                                            model.newsContent = dictionary.objectForKey("newsContent") as? String
-                                            model.isRead = dictionary.objectForKey("isRead") as? NSNumber
-                                            model.newsDate = dictionary.objectForKey("newsDate") as? String
-                                            model.dayOrNight = dictionary.objectForKey("dayOrNight") as? NSNumber
-                                            model.newsID = dictionary.objectForKey("_id") as? String
-                                            model.newsPicture = dictionary.objectForKey("newsPicture") as? String
-                                            
-                                            // 存储到数据库
-                                            newsManager.addNews(model)
-                                            // 添加到 newsArray
-                                            self.newsArray.append(model)
-                                        }
-                                        loadingView.dismiss()
-                                        self.mainTV.reloadData()
-                                    }
-                            }
-                        }
-                        else {
-                            loadingView.dismiss()
-                            self.mainTV.reloadData()
-                        }
-                    }
-            }
+            viewModel.loadTodayNews(submitString, dayOrNight: dayOrNight)
         }
         
         // 后台开启任务，从数据库清除6天前的新闻
-//        self.performSelectorInBackground(#selector(ViewController.deleteNewsData), withObject: nil)
+        //        self.performSelectorInBackground(#selector(ViewController.deleteNewsData), withObject: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        //        let loadingView = LoadingView()
+        //        loadingView.show()
+        //        Delay(3.0) {
+        //            loadingView.dismiss()
+        //        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let newsVC = segue.destinationViewController as! NewsViewController
-        newsVC.modelArray = self.newsArray
+        newsVC.modelArray = newsArray
         newsVC.currentRow = sender as? NSIndexPath
         // AnimationClosure
         newsVC.selectedClosure = {(selectedArray) in
@@ -189,10 +122,43 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 })
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - ViewModelDelegate
+    func loadTodayNewsCallBack(dataArray: Array<NewsModel>) {
+        guard dataArray.count > 0 else {
+            // 今天没有数据，获取本地最新一天的数据
+            let newsManager = NewsHelpers.shareManager
+            newsArray = newsManager.findLastestNews()
+            if newsArray.count == 0 {
+                // 本地没有数据，获取服务器某一天的数据(那天肯定有新闻，除非服务器崩了)
+                viewModel.loadSomeDayNews("2016.08.03", dayOrNight: 0)
+            }
+            else {
+                loadingView.dismiss()
+                mainTV.reloadData()
+            }
+            return
+        }
+        newsArray.removeAll()
+        newsArray = dataArray
+        loadingView.dismiss()
+        mainTV.reloadData()
+    }
+    
+    func loadSomeDayNewsCallBack(dataArray: Array<NewsModel>) {
+        guard dataArray.count > 0 else {
+            loadingView.dismiss()
+            return
+        }
+        newsArray.removeAll()
+        newsArray = dataArray
+        loadingView.dismiss()
+        mainTV.reloadData()
     }
     
     //MARK: - UITableViewDataSource
@@ -201,21 +167,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.newsArray.count == 0 {
+        if newsArray.count == 0 {
             return 0
         }
-        return self.newsArray.count + 1;
+        return newsArray.count + 1;
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return self.topCellHeight
+            return topCellHeight
         }
         else if indexPath.row == self.newsArray.count {
-            return self.bottomCellHeight
+            return bottomCellHeight
         }
         else {
-            let context = self.newsArray[indexPath.row].newsTitle! as String
+            let context = newsArray[indexPath.row].newsTitle! as String
             let height = context.getHeight(context, margin: 65, fontSize: 17)
             return (height < 21) ? 110 : 110 - 21 + height;
         }
@@ -225,27 +191,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if indexPath.row == 0 {
             // Top Cell
             let cell = tableView.dequeueReusableCellWithIdentifier("Top", forIndexPath: indexPath) as! MainTopTableViewCell;
-            cell.model = self.newsArray[indexPath.row]
+            cell.model = newsArray[indexPath.row]
             return cell;
         }
-        else if indexPath.row == self.newsArray.count {
+        else if indexPath.row == newsArray.count {
             // Bottom Cell
             let cell = tableView.dequeueReusableCellWithIdentifier("Bottom", forIndexPath: indexPath) as! MainBottomTableViewCell;
             cell.delegate = self
-            cell.modelArray = self.newsArray
+            cell.modelArray = newsArray
             
             return cell;
         }
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier("Another", forIndexPath: indexPath) as! MainTableViewCell;
             cell.indexPath = indexPath
-            cell.model = self.newsArray[indexPath.row]
+            cell.model = newsArray[indexPath.row]
             return cell;
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard indexPath.row != self.cellArray.count else {
+        guard indexPath.row != cellArray.count else {
             // 点击最后一个Cell 没有效果
             return
         }
@@ -257,36 +223,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         self.performSelector(#selector(ViewController.deselect(_:)), withObject: indexPath, afterDelay: 0.3)
     }
-
+    
     //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let offset_y = scrollView.contentOffset.y;
         
         // contentOffset.y < 0
-        guard let cell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: 0, inSection: 0)) as? MainTopTableViewCell else {
+        guard let cell = mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: 0, inSection: 0)) as? MainTopTableViewCell else {
             // MainTopTableViewCell 已经不在visiableCells数组
-        
-            let distance = self.topCellHeight - self.markFirstCellHeight
+            
+            let distance = topCellHeight - markFirstCellHeight
             if offset_y > distance {
-                if self.lastOffset > offset_y {
-                    self.menuButton.hidden = false
+                if lastOffset > offset_y {
+                    menuButton.hidden = false
                 }
                 else{
-                    self.menuButton.hidden = true
+                    menuButton.hidden = true
                 }
             }
             else {
-                self.menuButton.hidden = false
+                menuButton.hidden = false
             }
             
-            self.lastOffset = offset_y
+            lastOffset = offset_y
             return
         }
         if offset_y < 0 {
             // BackgroundImage
             var imageRect = cell.backgroundImage.frame
             imageRect.origin.y = offset_y
-            imageRect.size.height = self.topCellHeight - offset_y
+            imageRect.size.height = topCellHeight - offset_y
             cell.backgroundImage.frame = imageRect
             // Date And Time
             var dateRect = cell.currentDate.frame
@@ -298,27 +264,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         else {
             // 恢复到原始状态
-            cell.backgroundImage.frame = CGRectMake(0, 0, WIDTH, self.topCellHeight)
+            cell.backgroundImage.frame = CGRectMake(0, 0, WIDTH, topCellHeight)
             cell.currentDate.frame = CGRectMake(12, 12, 110, 29)
             cell.currentTime.frame = CGRectMake(12, 49, 110, 21)
             // Mark Height
-            self.markFirstCellHeight = cell.heightConstraint.constant
+            markFirstCellHeight = cell.heightConstraint.constant
         }
         
         // 是否隐藏菜单按钮
-        let distance = self.topCellHeight - self.markFirstCellHeight
+        let distance = topCellHeight - markFirstCellHeight
         if offset_y > distance {
-            if self.lastOffset > offset_y {
-                self.menuButton.hidden = false
+            if lastOffset > offset_y {
+                menuButton.hidden = false
             }
             else{
-                self.menuButton.hidden = true
+                menuButton.hidden = true
             }
         }
         else {
-            self.menuButton.hidden = false
+            menuButton.hidden = false
         }
-        self.lastOffset = offset_y
+        lastOffset = offset_y
     }
     
     //MARK: - MenuViewDelegate
@@ -334,7 +300,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var dayOrNight: NSInteger = 0
         let indexPath = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSIndexPath
-        if self.type == TimeType.Day {
+        if type == TimeType.Day {
             // 白天
             switch indexPath.section {
             case 0:
@@ -409,58 +375,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsArray = newsManager.findNews(submitString, dayOrNight: dayOrNight)
         if newsArray.count == 0 {
             // 本地没有数据，从网络获取
-            let loadingView = LoadingView()
+            loadingView = LoadingView.init()
             loadingView.show()
-            Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":submitString, "dayOrNight":"\(dayOrNight)"], encoding: .JSON, headers: ["Content-Type":"application/json"])
-                .responseJSON { (response) in
-                    guard response.result.error == nil else {
-                        print("Error: ", response.result.error!)
-                        return
-                    }
-                    let dataArray = response.result.value as! NSArray
-                    if dataArray.count != 0 {
-                        for dataDic in dataArray {
-                            let dictionary = dataDic as! NSDictionary
-                            
-                            let model = NewsModel()
-                            model.newsType = dictionary.objectForKey("newsType") as? NSNumber
-                            model.newsTitle = dictionary.objectForKey("newsTitle") as? String
-                            model.commNum = dictionary.objectForKey("commNum") as? NSNumber
-                            model.newsContent = dictionary.objectForKey("newsContent") as? String
-                            model.isRead = dictionary.objectForKey("isRead") as? NSNumber
-                            model.newsDate = dictionary.objectForKey("newsDate") as? String
-                            model.dayOrNight = dictionary.objectForKey("dayOrNight") as? NSNumber
-                            model.newsID = dictionary.objectForKey("_id") as? String
-                            model.newsPicture = dictionary.objectForKey("newsPicture") as? String
-                            
-                            // 存储到数据库
-                            newsManager.addNews(model)
-                            // 添加到 newsArray
-                            self.newsArray.append(model)
-                        }
-                    }
-                    else {
-                        // 服务器今天也没有新闻，从本地数据库取最新的新闻
-                        self.newsArray = newsManager.findLastestNews()
-                    }
-                    loadingView.dismiss()
-                    self.mainTV.reloadData()
-            }
+            viewModel.loadSomeDayNews(submitString, dayOrNight: dayOrNight)
         }
         else {
-            self.mainTV.reloadData()
+            mainTV.reloadData()
         }
     }
     
     //MARK: - MainBottomTableViewCellDelegate
     func listButtonCallBack() {
-        if !self.validateTimeIsDay() {
-            self.type = TimeType.Night
+        if !validateTimeIsDay() {
+            type = TimeType.Night
         }
         else {
-            self.type = TimeType.Day
+            type = TimeType.Day
         }
-        let springView = SpringView.init(timeType: self.type)
+        let springView = SpringView.init(timeType: type)
         springView.show()
     }
     
@@ -492,7 +424,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //MARK: - Custom Method
     func deselect(indexPath: NSIndexPath) {
-        self.mainTV.deselectRowAtIndexPath(indexPath, animated: true)
+        mainTV.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     // 判断当前时间是白天还是黑夜
@@ -507,11 +439,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func deleteNewsData() {
-        // 获取六天前的日期 Delete News Six Days Ago 
+        // 获取六天前的日期 Delete News Six Days Ago
         let deleteTimeString = String.getXDaysAgoTimeString(6)
         let newsManager = NewsHelpers.shareManager
         newsManager.deleteNews(deleteTimeString)
     }
+    
+    //MARK: - Lazy Getter
+    lazy var loadingView: LoadingView = {
+        let ldView = LoadingView.init()
+        return ldView
+    }()
     
     //MARK: - 模拟数据
     private lazy var cellArray: Array<NSMutableDictionary> = {
@@ -544,6 +482,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
      *  newsManager.addNews(model)
      *  }
      */
-
+    
 }
 

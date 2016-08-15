@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1608075B1D49AAA4001B3E62 /* DecorationCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160807591D49AAA4001B3E62 /* DecorationCollectionReusableView.swift */; };
 		1608075C1D49AAA4001B3E62 /* DecorationCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1608075A1D49AAA4001B3E62 /* DecorationCollectionReusableView.xib */; };
+		164060341D61724700EF3EAE /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164060331D61724700EF3EAE /* ViewModel.swift */; };
 		16407EEA1D45B919009658A2 /* DatesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16407EE91D45B919009658A2 /* DatesCollectionView.swift */; };
 		16407EF11D461561009658A2 /* DayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16407EEF1D461561009658A2 /* DayCollectionViewCell.swift */; };
 		16407EF21D461561009658A2 /* DayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16407EF01D461561009658A2 /* DayCollectionViewCell.xib */; };
@@ -80,6 +81,7 @@
 /* Begin PBXFileReference section */
 		160807591D49AAA4001B3E62 /* DecorationCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecorationCollectionReusableView.swift; sourceTree = "<group>"; };
 		1608075A1D49AAA4001B3E62 /* DecorationCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DecorationCollectionReusableView.xib; sourceTree = "<group>"; };
+		164060331D61724700EF3EAE /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		16407EE91D45B919009658A2 /* DatesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatesCollectionView.swift; sourceTree = "<group>"; };
 		16407EEF1D461561009658A2 /* DayCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayCollectionViewCell.swift; sourceTree = "<group>"; };
 		16407EF01D461561009658A2 /* DayCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				16D77E401D3104E5002B4F41 /* ViewController.swift */,
+				164060331D61724700EF3EAE /* ViewModel.swift */,
 				16A552531D348AFB00E823C0 /* NewsViewController.swift */,
 			);
 			name = ViewControllers;
@@ -562,6 +565,7 @@
 				16CD08301D4765AD00592CA9 /* News.xcdatamodeld in Sources */,
 				16CD08331D476EF700592CA9 /* News+CoreDataProperties.swift in Sources */,
 				16DF4CC21D409649007803E4 /* Enum+Helpers.swift in Sources */,
+				164060341D61724700EF3EAE /* ViewModel.swift in Sources */,
 				16A670911D48CA0000BD6E56 /* CircleLayout.swift in Sources */,
 				16A552541D348AFB00E823C0 /* NewsViewController.swift in Sources */,
 				16DF4CCC1D40D189007803E4 /* CountdownView.swift in Sources */,
