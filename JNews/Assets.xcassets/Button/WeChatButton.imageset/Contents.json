@@ -2,15 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "20130820124923_vUPCr.thumb.700_0.jpeg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "WeChat140x140.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "WeChat210x210.png",
       "scale" : "3x"
     }
   ],

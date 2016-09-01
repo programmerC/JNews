@@ -24,7 +24,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var newsArray = Array<NewsModel>()
     let viewModel = ViewModel()
     
-    
     //MARK: - Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,16 +60,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         // 后台开启任务，从数据库清除6天前的新闻
-        //        self.performSelectorInBackground(#selector(ViewController.deleteNewsData), withObject: nil)
+//        self.performSelectorInBackground(.deleteNewsAction, withObject: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //        let loadingView = LoadingView()
-        //        loadingView.show()
-        //        Delay(3.0) {
-        //            loadingView.dismiss()
-        //        }
+        
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -211,7 +206,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard indexPath.row != cellArray.count else {
+        guard indexPath.row != newsArray.count else {
             // 点击最后一个Cell 没有效果
             return
         }
@@ -221,7 +216,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         guard indexPath.row != 0 else {
             return
         }
-        self.performSelector(#selector(ViewController.deselect(_:)), withObject: indexPath, afterDelay: 0.3)
+        self.performSelector(.deselectAction, withObject: indexPath, afterDelay: 0.3)
     }
     
     //MARK: - UIScrollViewDelegate
@@ -265,8 +260,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         else {
             // 恢复到原始状态
             cell.backgroundImage.frame = CGRectMake(0, 0, WIDTH, topCellHeight)
-            cell.currentDate.frame = CGRectMake(12, 12, 110, 29)
-            cell.currentTime.frame = CGRectMake(12, 49, 110, 21)
+            cell.currentDate.frame = CGRectMake(16, 12, 110, 29)
+            cell.currentTime.frame = CGRectMake(16, 49, 110, 21)
             // Mark Height
             markFirstCellHeight = cell.heightConstraint.constant
         }
@@ -371,15 +366,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let submitString = dateFormate.stringFromDate(calendar!.dateFromComponents(components!)!)
         // 读取CoreData数据
         let newsManager = NewsHelpers.shareManager
-        newsArray.removeAll()
-        newsArray = newsManager.findNews(submitString, dayOrNight: dayOrNight)
-        if newsArray.count == 0 {
+        let tempArray = newsManager.findNews(submitString, dayOrNight: dayOrNight)
+        if tempArray.count == 0 {
             // 本地没有数据，从网络获取
             loadingView = LoadingView.init()
             loadingView.show()
             viewModel.loadSomeDayNews(submitString, dayOrNight: dayOrNight)
         }
         else {
+            newsArray.removeAll()
+            newsArray = tempArray
             mainTV.reloadData()
         }
     }
@@ -450,38 +446,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let ldView = LoadingView.init()
         return ldView
     }()
-    
-    //MARK: - 模拟数据
-    private lazy var cellArray: Array<NSMutableDictionary> = {
-        var array = [NSMutableDictionary]()
-        // NSMutableDictionary
-        let plistPath = NSBundle.mainBundle().pathForResource("LocalData", ofType: ".plist")
-        let plistArray = NSArray.init(contentsOfFile: plistPath!)
-        for dic in plistArray! {
-            let newDic = NSMutableDictionary.init(dictionary: dic as! NSDictionary)
-            array.append(newDic)
-        }
-        return array
-    }()
-    /*
-     *  添加plist数据到CoreData
-     *  var number = 1
-     *  for item in self.cellArray {
-     *  let model = NewsModel()
-     *  model.newsType = NSNumber.init(short: Int16(item.objectForKey("newsType") as! String)!)
-     *  model.newsTitle = item.objectForKey("title") as? String
-     *  model.commNum = NSNumber.init(int: Int32(item.objectForKey("commentNum") as! String)!)
-     *  model.newsContent = item.objectForKey("content") as? String
-     *  model.isRead = NSNumber.init(short: Int16(item.objectForKey("isRead") as! String)!)
-     *  model.newsDate = "2016.07.27"
-     *  model.dayOrNight = NSNumber.init(short: 0)
-     *  model.newsID = "201607270\(number)"
-     *  print("\(model.newsID)")
-     *
-     *  number += 1
-     *  newsManager.addNews(model)
-     *  }
-     */
-    
+}
+
+//MARK: - Selector Extension
+private extension Selector {
+    static let deselectAction = #selector(ViewController.deselect(_:))
+    static let deleteNewsAction = #selector(ViewController.deleteNewsData)
 }
 

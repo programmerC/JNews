@@ -12,3 +12,9 @@ enum TimeType {
     case Day
     case Night
 }
+
+enum ShareType {
+    case Sina
+    case WeChatTimeLine
+    case WeChatAppMessage
+}

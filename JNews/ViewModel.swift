@@ -20,7 +20,7 @@ class ViewModel: NSObject {
     
     func loadTodayNews(newsDate: String, dayOrNight: NSInteger) {
         let newsManager = NewsHelpers.shareManager
-
+        
         Alamofire.request(.POST, "\(Base_URL)somedayNews", parameters: ["newsDate":newsDate, "dayOrNight":"\(dayOrNight)"], encoding: .JSON, headers: ["Content-Type":"application/json"])
             .responseJSON { (response) in
                 guard response.result.error == nil else {
@@ -51,7 +51,6 @@ class ViewModel: NSObject {
                         
                         return model
                     })
-
                 }
                 guard self.delegate != nil else {
                     return
@@ -93,7 +92,7 @@ class ViewModel: NSObject {
                         
                         return model
                     })
-
+                    
                 }
                 guard self.delegate != nil else {
                     return

@@ -34,7 +34,7 @@
                                     <outlet property="delegate" destination="zRz-0I-NFa" id="nU0-wt-nZs"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHy-Wl-LCH">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHy-Wl-LCH">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="IRJ-jv-ck7">
@@ -51,7 +51,8 @@
                                         <exclude reference="f2i-sq-KmG"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="-40" y="11" width="40" height="40"/>
                                     <mask key="constraints">
                                         <include reference="IRJ-jv-ck7"/>
                                         <include reference="f2i-sq-KmG"/>
@@ -61,14 +62,46 @@
                                     <action selector="backAction:" destination="zRz-0I-NFa" eventType="touchUpInside" id="DXw-Jf-HwX"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p9X-EU-Lfr">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="J0s-k2-9bC">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="20" id="qHP-XN-9yh">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <state key="normal" image="PersonButton"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="J0s-k2-9bC"/>
+                                        <exclude reference="qHP-XN-9yh"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="335" y="-40" width="40" height="40"/>
+                                    <mask key="constraints">
+                                        <include reference="J0s-k2-9bC"/>
+                                        <include reference="qHP-XN-9yh"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="homeAction:" destination="zRz-0I-NFa" eventType="touchUpInside" id="SuB-ic-sAX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="p9X-EU-Lfr" firstAttribute="trailing" secondItem="5vp-M5-spd" secondAttribute="trailingMargin" id="0ZJ-8W-cNL">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-5"/>
+                            </constraint>
                             <constraint firstItem="EIS-fp-yWX" firstAttribute="top" secondItem="MdZ-mI-rOI" secondAttribute="bottom" id="3iH-JU-p2a">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="EIS-fp-yWX" secondAttribute="trailing" constant="-16" id="Hvz-2X-YSR">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-16"/>
                             </constraint>
+                            <constraint firstItem="p9X-EU-Lfr" firstAttribute="top" secondItem="5vp-M5-spd" secondAttribute="topMargin" constant="-40" id="IaH-l7-OxG"/>
                             <constraint firstItem="EIS-fp-yWX" firstAttribute="leading" secondItem="5vp-M5-spd" secondAttribute="leadingMargin" constant="-16" id="MTc-yE-eVn">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-16"/>
                             </constraint>
@@ -76,34 +109,46 @@
                             <constraint firstItem="yA2-0F-xLR" firstAttribute="top" secondItem="EIS-fp-yWX" secondAttribute="bottom" id="TJp-5h-YMF">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="QHy-Wl-LCH" firstAttribute="leading" secondItem="5vp-M5-spd" secondAttribute="leadingMargin" constant="-5" id="ZLA-oA-xW7"/>
+                            <constraint firstItem="QHy-Wl-LCH" firstAttribute="leading" secondItem="5vp-M5-spd" secondAttribute="leadingMargin" constant="-60" id="ZLA-oA-xW7"/>
+                            <constraint firstItem="p9X-EU-Lfr" firstAttribute="top" secondItem="MdZ-mI-rOI" secondAttribute="bottom" constant="11" id="gu1-3y-mrr"/>
+                            <constraint firstItem="EIS-fp-yWX" firstAttribute="leading" secondItem="QHy-Wl-LCH" secondAttribute="trailing" constant="4" id="pLC-n0-14O"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="EIS-fp-yWX"/>
                                 <exclude reference="QHy-Wl-LCH"/>
+                                <exclude reference="p9X-EU-Lfr"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="TJp-5h-YMF"/>
                                 <exclude reference="O1D-wq-Ryo"/>
                                 <exclude reference="ZLA-oA-xW7"/>
+                                <exclude reference="0ZJ-8W-cNL"/>
+                                <exclude reference="IaH-l7-OxG"/>
+                                <exclude reference="gu1-3y-mrr"/>
                                 <exclude reference="3iH-JU-p2a"/>
                                 <exclude reference="Hvz-2X-YSR"/>
                                 <exclude reference="MTc-yE-eVn"/>
+                                <exclude reference="pLC-n0-14O"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="EIS-fp-yWX"/>
                                 <include reference="QHy-Wl-LCH"/>
+                                <include reference="p9X-EU-Lfr"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="TJp-5h-YMF"/>
                                 <include reference="O1D-wq-Ryo"/>
-                                <include reference="ZLA-oA-xW7"/>
+                                <exclude reference="ZLA-oA-xW7"/>
+                                <include reference="0ZJ-8W-cNL"/>
+                                <exclude reference="IaH-l7-OxG"/>
+                                <exclude reference="gu1-3y-mrr"/>
                                 <include reference="3iH-JU-p2a"/>
                                 <include reference="Hvz-2X-YSR"/>
                                 <include reference="MTc-yE-eVn"/>
+                                <exclude reference="pLC-n0-14O"/>
                             </mask>
                         </variation>
                     </view>
@@ -111,6 +156,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="backButton" destination="QHy-Wl-LCH" id="SjN-WZ-yn4"/>
+                        <outlet property="homeButton" destination="p9X-EU-Lfr" id="0e7-YY-NCs"/>
                         <outlet property="newsCV" destination="EIS-fp-yWX" id="EdA-Mc-LaV"/>
                     </connections>
                 </viewController>
@@ -241,6 +287,7 @@
     </scenes>
     <resources>
         <image name="LeftItem" width="40" height="40"/>
+        <image name="PersonButton" width="40" height="40"/>
         <image name="RightItem" width="40" height="40"/>
     </resources>
 </document>

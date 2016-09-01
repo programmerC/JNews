@@ -48,9 +48,11 @@ class LoadingView: UIView {
         self.backgroundColor = UIColor.whiteColor()
         
         // Background Image
+        /*
         let imageView = UIImageView(frame: self.frame)
         imageView.image = UIImage(named: "")
         self.addSubview(imageView)
+        */
         
         configurateLayer()
         configurateAnimation()

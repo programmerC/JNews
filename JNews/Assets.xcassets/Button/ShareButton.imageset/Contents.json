@@ -2,15 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "1226lyzwbz7.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "72右.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "108右.png",
       "scale" : "3x"
     }
   ],
