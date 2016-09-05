@@ -13,7 +13,7 @@ let WIDTH = UIScreen.mainScreen().bounds.size.width
 let HEIGHT = UIScreen.mainScreen().bounds.size.height
 let Base_URL = "http://139.129.133.227:8080/"
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuViewDelegate, MainBottomTableViewCellDelegate, ViewModelDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate, MenuViewDelegate, MainBottomTableViewCellDelegate, ViewModelDelegate {
     @IBOutlet weak var mainTV: UITableView!
     @IBOutlet weak var menuButton: UIButton!
     let bottomCellHeight: CGFloat = 280
@@ -23,6 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var type: TimeType = TimeType.Day
     var newsArray = Array<NewsModel>()
     let viewModel = ViewModel()
+    var touchIndexPath: NSIndexPath?
     
     //MARK: - Life Circle
     override func viewDidLoad() {
@@ -65,7 +66,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        // Register 3DTouch
+        guard #available(iOS 9.0, *) else {
+            print("iOS version must be greater than 9.0");
+            return
+        }
+        guard self.traitCollection.forceTouchCapability == .Available else {
+            print("This device does not support 3DTouch");
+            return
+        }
+        self.registerForPreviewingWithDelegate(self, sourceView: self.view)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -74,47 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsVC.currentRow = sender as? NSIndexPath
         // AnimationClosure
         newsVC.selectedClosure = {(selectedArray) in
-            let _ = selectedArray.map({[unowned self] (row) -> Int in
-                // 筛选在visiableCells的cell
-                if row == 0 {
-                    guard let cell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: row, inSection: 0)) as? MainTopTableViewCell else {
-                        return row
-                    }
-                    // 执行动画，如果已读则不执行
-                    let model = self.newsArray[row] as NewsModel
-                    guard model.isRead!.intValue == 0 else {
-                        cell.number.textColor = UIColor.whiteColor()
-                        cell.numberView.backgroundColor = cell.color
-                        return row
-                    }
-                    cell.animationStart()
-                }
-                else {
-                    guard let cell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: row, inSection: 0)) as? MainTableViewCell else {
-                        return row
-                    }
-                    let model = self.newsArray[row] as NewsModel
-                    guard model.isRead!.intValue == 0 else {
-                        return row
-                    }
-                    cell.animationStart()
-                }
-                
-                // 设置新闻已读
-                let model = self.newsArray[row] as NewsModel
-                model.isRead = NSNumber.init(short: 1)
-                
-                // 更新到数据库
-                let newsManager = NewsHelpers.shareManager
-                newsManager.updateNews(model.newsID!)
-                
-                // 如果BottomViewCell存在的话执行动画
-                guard let bottomCell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: self.newsArray.count, inSection: 0)) as? MainBottomTableViewCell else {
-                    return row
-                }
-                bottomCell.animationStart(row)
-                return row
-                })
+            self.closureExecute(selectedArray)
         }
     }
     
@@ -217,6 +187,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return
         }
         self.performSelector(.deselectAction, withObject: indexPath, afterDelay: 0.3)
+    }
+    
+    //MARK: - 3DTouch Peek And Pop
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        // source Rect
+        guard #available(iOS 9.0, *) else {
+            print("iOS version must be greater than 9.0")
+            return nil
+        }
+        previewingContext.sourceRect = CGRectMake(20, 20, WIDTH - 40, HEIGHT - 40)
+        
+        // current indexPath
+        var tempLocation: CGPoint = location
+        tempLocation.y = tempLocation.y + lastOffset
+        touchIndexPath = mainTV.indexPathForRowAtPoint(tempLocation)! as NSIndexPath
+        guard touchIndexPath!.row != newsArray.count else {
+            return nil
+        }
+        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let newsVC = storyBoard.instantiateViewControllerWithIdentifier("news") as! NewsViewController
+        newsVC.modelArray = newsArray
+        newsVC.currentRow = touchIndexPath
+        return newsVC
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        // Pop
+        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let newsVC = storyBoard.instantiateViewControllerWithIdentifier("news") as! NewsViewController
+        newsVC.modelArray = newsArray
+        newsVC.currentRow = touchIndexPath
+        // AnimationClosure
+        newsVC.selectedClosure = {(selectedArray) in
+            self.closureExecute(selectedArray)
+        }
+        self.navigationController?.pushViewController(newsVC, animated: true)
     }
     
     //MARK: - UIScrollViewDelegate
@@ -439,6 +445,50 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let deleteTimeString = String.getXDaysAgoTimeString(6)
         let newsManager = NewsHelpers.shareManager
         newsManager.deleteNews(deleteTimeString)
+    }
+    
+    func closureExecute(selectedArray: Array<Int>) {
+        let _ = selectedArray.map({[unowned self] (row) -> Int in
+            // 筛选在visiableCells的cell
+            if row == 0 {
+                guard let cell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: row, inSection: 0)) as? MainTopTableViewCell else {
+                    return row
+                }
+                // 执行动画，如果已读则不执行
+                let model = self.newsArray[row] as NewsModel
+                guard model.isRead!.intValue == 0 else {
+                    cell.number.textColor = UIColor.whiteColor()
+                    cell.numberView.backgroundColor = cell.color
+                    return row
+                }
+                cell.animationStart()
+            }
+            else {
+                guard let cell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: row, inSection: 0)) as? MainTableViewCell else {
+                    return row
+                }
+                let model = self.newsArray[row] as NewsModel
+                guard model.isRead!.intValue == 0 else {
+                    return row
+                }
+                cell.animationStart()
+            }
+            
+            // 设置新闻已读
+            let model = self.newsArray[row] as NewsModel
+            model.isRead = NSNumber.init(short: 1)
+            
+            // 更新到数据库
+            let newsManager = NewsHelpers.shareManager
+            newsManager.updateNews(model.newsID!)
+            
+            // 如果BottomViewCell存在的话执行动画
+            guard let bottomCell = self.mainTV.cellForRowAtIndexPath(NSIndexPath.init(forRow: self.newsArray.count, inSection: 0)) as? MainBottomTableViewCell else {
+                return row
+            }
+            bottomCell.animationStart(row)
+            return row
+            })
     }
     
     //MARK: - Lazy Getter
