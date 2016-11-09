@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingView: UIView {
+class LoadingView: UIView, CAAnimationDelegate {
     let radius: CGFloat = 45/2.0 - 4.5   // (总半径 - 圆圈半径) 用来计算每一个点的center
     var loadLayer = CALayer()   // Loading Layer
     // Color
@@ -304,7 +304,7 @@ class LoadingView: UIView {
     }
     
     //MARK: - Animation Stop
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         self.loadLayer.removeFromSuperlayer()
         self.removeFromSuperview()
     }

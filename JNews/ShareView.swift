@@ -12,7 +12,7 @@ protocol ShareViewDelegate {
     func shareViewButtonCallBack(type: ShareType)
 }
 
-class ShareView: UIView {
+class ShareView: UIView, CAAnimationDelegate {
     var sinaButton: UIButton?
     var timeLineButton: UIButton?
     var appMessageButton: UIButton?
@@ -68,7 +68,7 @@ class ShareView: UIView {
     }
     
     //MARK: - Animation Delegate
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         self.removeFromSuperview()
         blackView.removeFromSuperview()
     }

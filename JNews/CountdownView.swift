@@ -12,7 +12,7 @@ protocol CountdownViewDelegate {
     func animationStopCallBack(callBackInterval: NSTimeInterval, callBackReverseInterval: NSTimeInterval)
 }
 
-class CountdownView: UIView {
+class CountdownView: UIView, CAAnimationDelegate {
     let defaultFrame = CGRectMake(0, 64, WIDTH, HEIGHT - 64 - 115)
     var defaultCircleRadius: CGFloat = 110.0
     let circleLayer = CAShapeLayer()
@@ -161,7 +161,7 @@ class CountdownView: UIView {
     }
     
     // Animation Delegate
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if delegate != nil && flag{
             delegate?.animationStopCallBack(self.interval!, callBackReverseInterval: self.reverseInterval!)
         }

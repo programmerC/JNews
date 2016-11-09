@@ -53,6 +53,6 @@ class InputView: UIView {
 
 extension InputView {
     class func instantiateFromNib() -> InputView {
-        return NSBundle.mainBundle().loadNibNamed("InputView", owner: nil, options: nil)[0] as! InputView
+        return NSBundle.mainBundle().loadNibNamed("InputView", owner: nil, options: nil)![0] as! InputView
     }
 }

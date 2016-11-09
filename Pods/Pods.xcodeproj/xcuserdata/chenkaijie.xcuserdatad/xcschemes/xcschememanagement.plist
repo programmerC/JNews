@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-JNews.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0DD720F1AC80837C66BDDAC1B5BDCFF1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA5C6256A8CF7ABDD08E2581B565A7CF</key>
+		<key>870319122BB295202D2E29E6062F4177</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FBD6C136AAE8C8539D358F245C79E547</key>
+		<key>C41D8A838D2C3C2F654D620CC2DEA4E5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D31BA150A3C2ABBA5920579729051BCD</key>
 		<dict>
 			<key>primary</key>
 			<true/>

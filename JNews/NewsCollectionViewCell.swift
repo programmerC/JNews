@@ -12,8 +12,8 @@ let ImageViewTag = 110
 let ScrollViewTag = 10
 class NewsCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource, DetailShareTableViewCellDelegate, ShareViewDelegate {
     @IBOutlet weak var detailNewsTV: UITableView!
-    var imageHeaderHeight: CGFloat = 0
-    var newsModel: NewsModel!
+    private var imageHeaderHeight: CGFloat = 0
+    private var newsModel: NewsModel!
     var index: NSInteger!
     var dataModel: NewsModel {
         get{

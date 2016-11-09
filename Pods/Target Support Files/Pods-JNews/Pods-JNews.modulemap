@@ -1,0 +1,6 @@
+framework module Pods_JNews {
+  umbrella header "Pods-JNews-umbrella.h"
+
+  export *
+  module * { export * }
+}
