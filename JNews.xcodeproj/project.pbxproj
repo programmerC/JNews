@@ -446,9 +446,8 @@
 				TargetAttributes = {
 					16D77E3A1D3104E5002B4F41 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 5M2K29SR83;
 						LastSwiftMigration = 0800;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					16D77E4E1D3104E6002B4F41 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -762,14 +761,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zhihuan Guo (2VUPBLLZWS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5M2K29SR83;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhihuan Guo (2VUPBLLZWS)";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = JNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.budong.jnews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8605b283-4014-4bcd-84aa-6ffbbe4da3a4";
+				PROVISIONING_PROFILE_SPECIFIER = com.budong.jnews;
 				SWIFT_OBJC_BRIDGING_HEADER = "JNews/JNews-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
@@ -784,14 +784,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Zhihuan Guo (2VUPBLLZWS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 5M2K29SR83;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhihuan Guo (2VUPBLLZWS)";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = JNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.budong.jnews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8605b283-4014-4bcd-84aa-6ffbbe4da3a4";
+				PROVISIONING_PROFILE_SPECIFIER = com.budong.jnews;
 				SWIFT_OBJC_BRIDGING_HEADER = "JNews/JNews-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 			};

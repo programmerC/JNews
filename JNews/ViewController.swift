@@ -57,11 +57,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if newsArray.count == 0 {
             loadingView.show()
-            viewModel.loadTodayNews(submitString, dayOrNight: dayOrNight)
+            // 服务器已遗弃
+            // viewModel.loadTodayNews(submitString, dayOrNight: dayOrNight)
+            let localDataPath = NSBundle.mainBundle().pathForResource("LocalData", ofType: ".plist")
+            let dataArray = NSArray.init(contentsOfFile: localDataPath!)
+            guard dataArray != nil && dataArray?.count > 0 else {
+                return
+            }
+            let _ = dataArray!.map({ (dictionary) -> NewsModel in
+                let model = NewsModel()
+                model.newsType = Int(dictionary.objectForKey("newsType") as! String)
+                model.newsTitle = dictionary.objectForKey("title") as? String
+                model.commNum = Int(dictionary.objectForKey("commentNum") as! String)
+                model.newsContent = dictionary.objectForKey("content") as? String
+                model.isRead = Int(dictionary.objectForKey("isRead") as! String)
+                model.newsDate = "2016.08.08"
+                model.dayOrNight = 0
+                model.newsID = ""
+                model.newsPicture = ""
+                // 存储到数据库
+                newsManager.addNews(model)
+                // 添加到 newsArray
+                newsArray.append(model)
+                
+                return model
+            })
+            loadingView.dismiss()
+            mainTV.reloadData()
         }
         
         // 后台开启任务，从数据库清除6天前的新闻
-//        self.performSelectorInBackground(.deleteNewsAction, withObject: nil)
+        // self.performSelectorInBackground(.deleteNewsAction, withObject: nil)
+        
     }
     
     override func viewDidAppear(animated: Bool) {

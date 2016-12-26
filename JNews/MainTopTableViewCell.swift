@@ -31,7 +31,7 @@ class MainTopTableViewCell: UITableViewCell {
             let context = newsModel.newsTitle!
             let height = context.getHeight(context, margin: 65, fontSize: 17)
             heightConstraint.constant = (height < 21) ? 149 : 149 - 21 + height;
-            
+            print("newsType: \(newsModel.newsType)")
             switch newsModel.newsType!.intValue {
             case 0:
                 type.text = "头条"
