@@ -6,7 +6,7 @@
 #### `本地存储是用CoreData，打开APP默认删除六天前的数据(好像现在被我关了)`
 
 
-`打开APP效果`
+<p>`打开APP效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/1.gif)
 <table>
 <tr>
@@ -27,7 +27,7 @@
 </tr>
 </table>
 
-`浏览新闻效果`
+<p>`浏览新闻效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/3.gif)
 <table>
 <tr>
@@ -40,10 +40,10 @@
 </tr>
 </table>
 
-`具体新闻左右滑效果`
+<p>`具体新闻左右滑效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/2.gif)
 
-`菜单栏按钮效果`
+<p>`菜单栏按钮效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/4.gif)
 <table>
 <tr>
