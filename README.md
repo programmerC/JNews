@@ -5,8 +5,8 @@
 #### `打开APP默认读取新闻数据依次顺序: 本地读取今日新闻->从后台读取今日新闻->读取本地最新的新闻->读取后台某一天的新闻.(前者取不到数据的时候执行下一操作)`
 #### `本地存储是用CoreData，打开APP默认删除六天前的数据(好像现在被我关了)`
 
-___
-####`打开APP效果`
+
+`打开APP效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/1.gif)
 <table>
 <tr>
@@ -26,8 +26,8 @@ ___
   <td>MainBottomTableViewCell/CircleLayout</td>
 </tr>
 </table>
-___
-####`浏览新闻效果`
+
+`浏览新闻效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/3.gif)
 <table>
 <tr>
@@ -39,11 +39,11 @@ ___
   <td>NewsViewController</td>
 </tr>
 </table>
-___
-####`具体新闻左右滑效果`
+
+`具体新闻左右滑效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/2.gif)
-___
-####`菜单栏按钮效果`
+
+`菜单栏按钮效果`
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/4.gif)
 <table>
 <tr>
