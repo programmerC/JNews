@@ -6,7 +6,7 @@
 #### `本地存储是用CoreData，打开APP默认删除六天前的数据(好像现在被我关了)`
 
 
-<p>`打开APP效果`
+<p>`打开APP效果`</p>
 ![image](https://github.com/programmerC/JNews/raw/master/Gif/1.gif)
 <table>
 <tr>
